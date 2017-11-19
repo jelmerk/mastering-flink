@@ -14,9 +14,13 @@ public class Splitter implements FlatMapFunction<String, Tuple2<String, Double>>
 	@Override
 	public void flatMap(String value, Collector<Tuple2<String, Double>> out) throws Exception {
 
+		// input format : timestamp_millis,value,sensor_name
+		System.out.println("In the splitter : " + value);
+
 		if (null != value && value.contains(",")) {
 			String parts[] = value.split(",");
-			out.collect(new Tuple2<String, Double>(parts[2], Double.parseDouble(parts[1])));
+			// output format : sensor_name, value
+			out.collect(new Tuple2<>(parts[2], Double.parseDouble(parts[1])));
 		}
 	}
 
